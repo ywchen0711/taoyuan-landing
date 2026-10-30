@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>桃園機場降落 Taoyuan Landing</title>
+<meta name="description" content="Fly China Airlines, EVA Air and STARLUX jets down to Taiwan Taoyuan International Airport.">
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="style.css?v=1">
+</head>
+<body>
+<canvas id="view"></canvas>
+<canvas id="hud"></canvas>
+
+<div id="menu">
+  <div class="panel">
+    <h1 data-t="title">桃園機場降落</h1>
+    <p class="sub" data-t="sub"></p>
+    <h3 data-t="h1"></h3><div id="alrow" class="row"></div>
+    <h3 data-t="h2"></h3><div id="tyrow" class="row"></div>
+    <h3 data-t="h3"></h3><div id="scrow" class="grid"></div>
+    <div id="custom" class="custom" hidden></div>
+    <div class="row end"><button id="helpBtn" class="ghost" data-t="help"></button><button id="tiltBtn" class="ghost"></button><button id="langBtn" class="ghost">English</button><button id="goBtn" class="go" data-t="go"></button></div>
+    <pre id="helpBox" data-t="helpText" hidden></pre>
+  </div>
+</div>
+
+<div id="flyui" hidden>
+  <div class="tr"><button id="camBtn">🎥</button><button id="pauseBtn">⏸</button></div>
+  <div id="yoke"><div id="yokeKnob">✈</div></div>
+  <div id="tright">
+    <input id="thrSlider" type="range" min="0" max="100" value="40" orient="vertical">
+    <div class="tbtns"><button id="tGear">GEAR</button><button id="tFlapDn">FLAP+</button><button id="tFlapUp">FLAP−</button><button id="tBrake">BRAKE</button><button id="tRev">REV</button><button id="tAP">AP</button><button id="tAT">A/T</button></div>
+  </div>
+</div>
+<div id="sub" hidden></div>
+
+<div id="pause" class="over" hidden><div class="panel small"><button id="resumeBtn" class="go" data-t="resume"></button><button id="restartBtn" data-t="restart"></button><button id="quitBtn" class="ghost" data-t="back"></button></div></div>
+
+<div id="report" class="over" hidden>
+  <div class="panel small">
+    <p id="rFlight" class="sub"></p>
+    <h2 id="rTitle"></h2>
+    <div id="rStars"></div>
+    <div id="rScore"></div>
+    <ul id="rItems"></ul>
+    <div class="row end"><button id="replayBtn" data-t="replay"></button><button id="againBtn" class="go" data-t="again"></button><button id="menuBtn" class="ghost" data-t="back"></button></div>
+  </div>
+</div>
+
+<script type="module" src="js/main.js?v=1"></script>
+</body>
+</html>
