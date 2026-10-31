@@ -28,7 +28,7 @@ const WINDS = { calm: [[50, 0, 0], { zh: '無風', en: 'Calm' }], light: [[60, 8
 
 // ---------------------------------------------------------------- the menu
 function menu() {
-  mode = 'menu'; $('menu').hidden = false; $('report').hidden = true; $('pause').hidden = true; $('flyui').hidden = true; document.body.classList.remove('flying');
+  mode = 'menu'; $('menu').hidden = false; $('report').hidden = true; $('pause').hidden = true; $('flyui').hidden = true; $('coach').hidden = true; document.body.classList.remove('flying');
   const L = save.lang, al = AIRLINES[save.al];
   if (!al.types.includes(save.type)) save.type = al.types[0];
   $('alrow').innerHTML = Object.entries(AIRLINES).map(([id, a]) => `<button class="al ${id === save.al ? 'on' : ''}" data-al="${id}" style="--c:${a.tint}"><b>${T(a.name)}</b><small>${a.code} · ${a.call}</small></button>`).join('');
@@ -47,7 +47,7 @@ const UI = {
   h1: { zh: '航空公司', en: 'Airline' }, h2: { zh: '機型', en: 'Aircraft' }, h3: { zh: '任務', en: 'Scenario' }, go: { zh: '開始進場 ✈', en: 'Begin the approach ✈' },
   help: { zh: '操作說明', en: 'Controls' }, again: { zh: '再降落一次', en: 'Fly it again' }, replay: { zh: '🎬 觀看回放', en: '🎬 Watch the replay' }, back: { zh: '回到選單', en: 'Back to the menu' },
   resume: { zh: '繼續飛行', en: 'Resume' }, restart: { zh: '重新開始', en: 'Restart' },
-  helpText: { zh: '俯仰：W/S 或 ↑/↓（↓ 拉機頭）　滾轉：A/D 或 ←/→　方向舵：Q/E\n油門：R 加 / F 減　襟翼：V 放下、Shift+V 收起　起落架：G\n煞車：空白鍵（按住）　反推力：X　減速板：B　自動駕駛：P　自動油門：T\n視角：C 切換，或 1 駕駛艙・2 追蹤・3 環繞・4 塔台・5 跑道旁・6 機翼\n手把：左搖桿俯仰滾轉、右搖桿方向舵、RT/LT 油門、A 煞車、B 反推、X/Y 襟翼、LB 起落架、RB 視角\n\n落地訣竅：對準跑道中心線，保持 3 度下滑（PAPI 兩白兩紅），速度維持在 Vref+5。50 呎左右收油門、輕輕拉機頭「拉平」，讓主輪先著地，再放下機頭、開反推、踩煞車。', en: 'Pitch: W/S or ↑/↓ (↓ raises the nose)  Roll: A/D or ←/→  Rudder: Q/E\nThrottle: R more / F less  Flaps: V extend, Shift+V retract  Gear: G\nBrakes: Space (hold)  Reversers: X  Speed brake: B  Autopilot: P  Autothrottle: T\nCameras: C cycles, or 1 cockpit · 2 chase · 3 orbit · 4 tower · 5 runway side · 6 wing\nGamepad: left stick pitch/roll, right stick rudder, RT/LT throttle, A brakes, B reversers, X/Y flaps, LB gear, RB camera\n\nHow to land: line up on the centreline, hold a 3° path (PAPI two white, two red) at Vref+5. Near 50 ft pull the thrust to idle and raise the nose gently to flare, let the mains touch first, then lower the nose, reversers on, brakes.' },
+  helpText: { zh: '俯仰：W/S 或 ↑/↓（↓ 拉機頭）　滾轉：A/D 或 ←/→　方向舵：Q/E\n油門：R 加 / F 減　襟翼：V 放下、Shift+V 收起　起落架：G\n煞車：空白鍵（按住）　反推力：X　減速板：B　自動駕駛：P　自動油門：T\n視角：C 切換，或 1 駕駛艙・2 追蹤・3 環繞・4 塔台・5 跑道旁・6 機翼\n快轉：N（自動：遠處 3 倍速，接近地面變回正常速度）　教練面板：H\n手把：左搖桿俯仰滾轉、右搖桿方向舵、RT/LT 油門、A 煞車、B 反推、X/Y 襟翼、LB 起落架、RB 視角\n\n落地訣竅：對準跑道中心線，保持 3 度下滑（PAPI 兩白兩紅），速度維持在 Vref+5。50 呎左右收油門、輕輕拉機頭「拉平」，讓主輪先著地，再放下機頭、開反推、踩煞車。\n\n觸控：左下圓盤是駕駛桿（往下拉＝拉機頭、往上推＝壓機頭、左右＝轉彎），右邊滑桿是油門，按鈕放起落架、襟翼、煞車、反推。\n\n降落步驟（飛行時左上角的教練面板會一步一步提醒你）：\n1. 對準跑道：HUD 下方的菱形偏哪邊就往哪邊轉，直到菱形在正中間。\n2. 放下起落架（G），襟翼一格一格放到最大（V）。速度太快時襟翼放不下去，先減油門。\n3. 速度保持 Vref+5（速度帶上紫色 REF 記號再上面一點）。\n4. 沿 3 度下滑：跑道左邊的 PAPI 燈兩白兩紅剛好；白太多是太高、紅太多是太低。也可以跟著 HUD 上的紫色十字飛。\n5. 50 呎：油門收到底。30 呎：輕輕拉機頭「拉平」，讓主輪先著地，下降率越小分數越高。\n6. 落地後：放下機頭、開反推（X）、煞車（空白鍵），慢下來後收反推，停在跑道上就完成了。', en: 'Pitch: W/S or ↑/↓ (↓ raises the nose)  Roll: A/D or ←/→  Rudder: Q/E\nThrottle: R more / F less  Flaps: V extend, Shift+V retract  Gear: G\nBrakes: Space (hold)  Reversers: X  Speed brake: B  Autopilot: P  Autothrottle: T\nCameras: C cycles, or 1 cockpit · 2 chase · 3 orbit · 4 tower · 5 runway side · 6 wing\nFast-forward: N (auto 3× far out, real time near the ground)  Coach panel: H\nGamepad: left stick pitch/roll, right stick rudder, RT/LT throttle, A brakes, B reversers, X/Y flaps, LB gear, RB camera\n\nHow to land: line up on the centreline, hold a 3° path (PAPI two white, two red) at Vref+5. Near 50 ft pull the thrust to idle and raise the nose gently to flare, let the mains touch first, then lower the nose, reversers on, brakes.\n\nTouch: the circle at bottom left is the yoke (pull down = nose up, push up = nose down, sideways = turn), the slider on the right is the throttle, and the buttons work the gear, flaps, brakes and reversers.\n\nStep by step (the coach panel at the top left reminds you while you fly):\n1. Line up: turn toward the diamond under the HUD until it is centred.\n2. Gear down (G), flaps out one notch at a time to full (V). If you are too fast the flaps will not go; take thrust off first.\n3. Hold Vref+5 (just above the magenta REF mark on the speed tape).\n4. Fly a 3° path: two white and two red PAPI lights left of the runway. More white is high, more red is low. Or follow the magenta cross on the HUD.\n5. At 50 ft: thrust to idle. At 30 ft: raise the nose gently to flare so the mains touch first; the softer, the better the score.\n6. On the runway: nose down, reversers (X), brakes (Space), stow the reversers when slow, and stop on the runway.' },
 };
 document.addEventListener('click', (e) => {
   const a = e.target.closest('[data-al]'); if (a) { save.al = a.dataset.al; save.type = AIRLINES[save.al].types[0]; store(); menu(); }
@@ -78,8 +78,8 @@ function start() {
   if (cfg.time !== 'day') AC.root.traverse((o) => { const m = o.material; if (m?.isMeshStandardMaterial) { m.emissive = new THREE.Color(cfg.time === 'night' ? '#3a3a44' : '#1a1a1a'); if (m.map) m.emissiveMap = m.map; m.needsUpdate = true; } }); // the cabin and logo lights, faintly
   F = createFlight(save.type, { rwy: cfg.rwy, dist: cfg.dist, wind: cfg.wind, wx: cfg.wx, ap: cfg.ap, at: cfg.at, fd: cfg.fd });
   landLight = new THREE.SpotLight('#fff4e0', cfg.time === 'day' ? 0 : 900, 1500, 0.32, 0.5, 1.1); scene.add(landLight, landLight.target);
-  rec = []; said = {}; warn = null; reportT = 0; t0 = performance.now(); mode = 'fly'; placeCamera.c = null; lastRA = 99999;
-  $('menu').hidden = true; $('report').hidden = true; $('pause').hidden = true; $('flyui').hidden = false; document.body.classList.add('flying');
+  rec = []; said = {}; warn = null; reportT = 0; coachDone = {}; coachT = 0; warpCur = 1; t0 = performance.now(); mode = 'fly'; placeCamera.c = null; lastRA = 99999;
+  $('menu').hidden = true; $('report').hidden = true; $('pause').hidden = true; $('flyui').hidden = false; document.body.classList.add('flying'); setCoach(save.coach !== false); setWarp(save.warp === 1 ? 1 : 'auto');
   const A = AIRLINES[save.al], num = A.nums[(Math.random() * A.nums.length) | 0], [wd, wk] = cfg.wind;
   F.callsign = `${A.call} ${num}`; F.flightNo = `${A.code}${num}`;
   setTimeout(() => say(`${F.callsign}, Taipei Tower, runway ${spell(cfg.rwy)}, wind ${String(wd).padStart(3, '0')} at ${wk} knots, cleared to land.`, { zh: `${F.callsign}，台北塔台，跑道 ${cfg.rwy}，風向 ${String(wd).padStart(3, '0')}、${wk} 節，許可落地。`, en: `${F.callsign}, Taipei Tower, runway ${cfg.rwy}, wind ${String(wd).padStart(3, '0')} at ${wk} knots, cleared to land.` }), 1200);
@@ -90,6 +90,89 @@ const spell = (r) => r.replace('L', ' left').replace('R', ' right').replace(/^0/
 function say(radioText, subText) { radio(radioText); sub = subText; subT = 7; }
 function hint(text) { sub = text; subT = 9; }
 function pause(v) { if (mode !== 'fly' && mode !== 'pause') return; mode = v ? 'pause' : 'fly'; $('pause').hidden = !v; }
+
+// ---------------------------------------------------------------- fast-forward: the long part of the approach runs quicker
+let warpCur = 1;
+function warpWant() {
+  if (save.warp === 1 || !F) return 1;
+  if (warn?.red) return 1;
+  if (F.onGround) return F.gs < 40 * KT && !F.stopped ? 2 : 1;
+  return clamp(1 + (F.ra - 300) / 300, 1, 3); // 3× above 900 ft, real time below 300 ft
+}
+function setWarp(v) { save.warp = v; store(); $('warpBtn').textContent = v === 1 ? '⏵ 1×' : '⏩ ' + T({ zh: '自動', en: 'Auto' }); }
+
+// ---------------------------------------------------------------- the coach: what to do next, in plain words
+const KEYN = {
+  down: [{ zh: 'W', en: 'W' }, { zh: '搖桿往上推', en: 'push the stick up' }], up: [{ zh: 'S', en: 'S' }, { zh: '搖桿往下拉', en: 'pull the stick down' }],
+  left: [{ zh: 'A', en: 'A' }, { zh: '搖桿往左', en: 'stick left' }], right: [{ zh: 'D', en: 'D' }, { zh: '搖桿往右', en: 'stick right' }],
+  rudL: [{ zh: 'Q', en: 'Q' }, { zh: '搖桿往左', en: 'stick left' }], rudR: [{ zh: 'E', en: 'E' }, { zh: '搖桿往右', en: 'stick right' }],
+  more: [{ zh: 'R', en: 'R' }, { zh: '油門往上推', en: 'throttle up' }], less: [{ zh: '按住 F', en: 'hold F' }, { zh: '油門拉到底', en: 'throttle to the bottom' }],
+  gear: [{ zh: 'G', en: 'G' }, { zh: 'GEAR', en: 'GEAR' }], flap: [{ zh: 'V', en: 'V' }, { zh: 'FLAP+', en: 'FLAP+' }],
+  rev: [{ zh: 'X', en: 'X' }, { zh: 'REV', en: 'REV' }], brake: [{ zh: '按住空白鍵', en: 'hold Space' }, { zh: '按住 BRAKE', en: 'hold BRAKE' }],
+};
+const K = (k) => T(KEYN[k][touch.on ? 1 : 0]);
+const Z = (zh, en) => ({ zh, en });
+let coachT = 0, coachDone = {};
+function coachAdvice() {
+  const ias = F.ias / KT, ref = F.T.vref + 5, ra = F.ra, d = F.distNm;
+  if (F.crashed) return Z('💥 飛機損壞了', '💥 The aircraft is damaged');
+  if (F.stopped) return Z('✅ 停住了！做得好，馬上看成績。', '✅ Stopped! Well done, your score is coming.');
+  if (F.onGround) {
+    const g = F.gs / KT;
+    if (!F.nose && g > 60) return Z(`主輪著地！機頭輕輕往下放（${K('down')}）`, `Mains down! Lower the nose gently (${K('down')})`);
+    if (Math.abs(F.across) > 8) return F.across > 0 ? Z(`偏右了，踩舵往左（${K('rudL')}）回到中心線`, `Drifting right: rudder left (${K('rudL')}) back to the centreline`) : Z(`偏左了，踩舵往右（${K('rudR')}）回到中心線`, `Drifting left: rudder right (${K('rudR')}) back to the centreline`);
+    if (!F.rev && g > 70) return Z(`開反推力（${K('rev')}）幫忙減速`, `Reversers on (${K('rev')}) to slow down`);
+    if (F.rev && g < 60) return Z(`速度降下來了，收反推（再按 ${K('rev')}）`, `Slow now: stow the reversers (${K('rev')} again)`);
+    if (F.brake < 0.1 && F.autobrake === 'OFF') return Z(`踩煞車（${K('brake')}）直到停住`, `Brakes (${K('brake')}) until you stop`);
+    return Z(`自動煞車在減速，想停快一點就${K('brake')}`, `Autobrake is slowing you; ${K('brake')} to stop sooner`);
+  }
+  if (warn?.text === 'STALL') return Z(`失速！機頭往下（${K('down')}）、加油門（${K('more')}）`, `Stall! Nose down (${K('down')}), more thrust (${K('more')})`);
+  if (warn && /PULL UP|SINK/.test(warn.text)) return Z(`下降太快！拉機頭（${K('up')}）、加油門（${K('more')}）`, `Sinking too fast! Nose up (${K('up')}), more thrust (${K('more')})`);
+  if (F.ap) return Z('自動駕駛正在飛，先看著 HUD。到 200 呎（聽到 Minimums）就交給你。', 'The autopilot is flying: watch the HUD. At 200 ft ("Minimums") it is yours.');
+  if (ra < 60) {
+    if (F.thr > 0.05) return Z(`收油門（${K('less')}）！`, `Thrust idle (${K('less')})!`);
+    if (ra < 40 && F.vs < -350) return Z(`現在輕拉機頭（${K('up')}）拉平，讓下降變慢`, `Flare now: raise the nose gently (${K('up')})`);
+    const crab = ((F.hdg * R2D - F.RW.hdg + 540) % 360) - 180;
+    if (Math.abs(crab) > 3) return crab > 0 ? Z(`踩舵（${K('rudL')}）把機頭對正跑道`, `Rudder (${K('rudL')}) to line the nose up with the runway`) : Z(`踩舵（${K('rudR')}）把機頭對正跑道`, `Rudder (${K('rudR')}) to line the nose up with the runway`);
+    return Z('保持住……等主輪輕輕碰地', 'Hold it... let the mains settle on');
+  }
+  if (!F.gear) return Z(`放下起落架（${K('gear')}）！`, `Gear down (${K('gear')})!`);
+  if (F.flapIdx < 4) {
+    const vmax = [340, 230, 215, 195, 180][Math.round(F.flapIdx) + 1];
+    if (ias > vmax - 3) return Z(`先減速到 ${vmax} 節以下（${K('less')}），再放襟翼`, `Slow below ${vmax} kt (${K('less')}), then more flaps`);
+    return Z(`放襟翼（${K('flap')}）：現在 ${F.T.flapNames[Math.round(F.flapIdx)]}，要放到 ${F.T.flapNames[4]}`, `Flaps (${K('flap')}): now ${F.T.flapNames[Math.round(F.flapIdx)]}, set ${F.T.flapNames[4]}`);
+  }
+  if (Math.abs(F.loc) > 0.35) return F.loc > 0 ? Z(`在跑道右邊：往左轉（${K('left')}）對準中心線，HUD 下方的菱形在左`, `Right of the runway: turn left (${K('left')}); the diamond under the HUD is on the left`) : Z(`在跑道左邊：往右轉（${K('right')}）對準中心線，HUD 下方的菱形在右`, `Left of the runway: turn right (${K('right')}); the diamond under the HUD is on the right`);
+  if (F.gsDev > 0.35) return Z(`太高了：機頭稍微往下（${K('down')}），PAPI 要兩白兩紅`, `Too high: nose down a little (${K('down')}); the PAPI wants two white, two red`);
+  if (F.gsDev < -0.35) return Z(`太低了：拉一點機頭（${K('up')}）、加油門（${K('more')}）`, `Too low: nose up a little (${K('up')}), more thrust (${K('more')})`);
+  if (!F.at && ias > ref + 10) return Z(`太快了：減油門（${K('less')}），目標 ${ref} 節`, `Too fast: less thrust (${K('less')}), aim for ${ref} kt`);
+  if (!F.at && ias < ref - 4) return Z(`太慢了：加油門（${K('more')}），目標 ${ref} 節`, `Too slow: more thrust (${K('more')}), aim for ${ref} kt`);
+  return Z(`很好，保持住！速度 ${ref} 節、跟著紫色十字（飛行導引）`, `Good, hold it! ${ref} kt, follow the magenta cross (flight director)`);
+}
+function coach(dt) {
+  if ((coachT -= dt) > 0) return; coachT = 0.2;
+  const ias = F.ias / KT, ref = F.T.vref + 5, td = !!said.welcome || F.onGround;
+  if (F.ra < 60 && F.thr <= 0.05 && !F.onGround) coachDone.idle = true;
+  if (td) { coachDone.td = true; coachDone.idle = true; }
+  if (F.onGround && (F.revOn || F.brake > 0.1 || F.autobrake !== 'OFF')) coachDone.slow = true;
+  const steps = [
+    [Z('對準跑道中心線', 'Line up on the centreline'), td || Math.abs(F.loc) < 0.35],
+    [Z('放下起落架', 'Gear down'), F.gearPos > 0.99],
+    [Z(`襟翼放到 ${F.T.flapNames[4]}`, `Flaps ${F.T.flapNames[4]}`), F.flapIdx >= 4],
+    [Z(`速度 ${ref} 節（現在 ${Math.round(ias)}）`, `Speed ${ref} kt (now ${Math.round(ias)})`), td || Math.abs(ias - ref) < 8],
+    [Z('沿著 3° 下滑道', 'On the 3° glide path'), td || Math.abs(F.gsDev) < 0.35],
+    [Z('50 呎收油門', 'Thrust idle at 50 ft'), !!coachDone.idle],
+    [Z('拉平、主輪先著地', 'Flare, mains first'), !!coachDone.td],
+    [Z('反推＋煞車', 'Reversers and brakes'), !!coachDone.slow],
+    [Z('停在跑道上', 'Stop on the runway'), F.stopped],
+  ];
+  const cur = steps.findIndex((s) => !s[1]);
+  const phase = F.onGround ? Z('落地滑行', 'Rollout') : F.ra < 60 ? Z('拉平', 'Flare') : F.ra < 1000 ? Z('短五邊', 'Short final') : Z('進場', 'Approach');
+  $('cPhase').textContent = `${T(phase)} · ${F.distNm.toFixed(1)} NM · ${Math.round(F.ra)} ft${warpCur > 1.05 ? `  ⏩ ${warpCur.toFixed(1)}×` : ''}`;
+  $('cNow').textContent = T(coachAdvice());
+  $('cSteps').innerHTML = steps.map((s, i) => `<li class="${s[1] ? 'ok' : i === cur ? 'cur' : ''}">${s[1] ? '✓' : i === cur ? '▶' : '·'} ${T(s[0])}</li>`).join('');
+}
+function setCoach(v) { save.coach = v; store(); $('coach').hidden = !v || mode !== 'fly'; $('coachBtn').classList.toggle('on', v); }
 
 // ---------------------------------------------------------------- input
 const keys = new Set(), inp = { pitch: 0, roll: 0, yaw: 0, thr: 0, brake: 0 };
@@ -104,6 +187,8 @@ addEventListener('keydown', (e) => {
   if (c === 'KeyP') { if (F.ap) F.apOff('pilot'); else { F.ap = true; F.gammaHold = null; sfx('click'); } }
   if (c === 'KeyT') { F.at = !F.at; sfx('click'); }
   if (c === 'KeyC') cycleCam();
+  if (c === 'KeyN') setWarp(save.warp === 1 ? 'auto' : 1);
+  if (c === 'KeyH') setCoach(save.coach === false);
   const n = /^Digit([1-6])$/.exec(c); if (n) setCam(['cockpit', 'chase', 'orbit', 'tower', 'runway', 'wing'][n[1] - 1]);
   if (c === 'Escape') pause(true);
   if (c === 'KeyM') setMute(!isMuted());
@@ -132,7 +217,7 @@ const tb = (id, fn) => $(id).addEventListener('pointerdown', (e) => { e.preventD
 tb('tGear', () => { F.gear = F.gear ? 0 : 1; sfx('gear'); }); tb('tFlapDn', () => { F.flapIdx = Math.min(4, F.flapIdx + 1); sfx('flaps'); }); tb('tFlapUp', () => { F.flapIdx = Math.max(0, F.flapIdx - 1); sfx('flaps'); });
 tb('tRev', () => { F.rev = !F.rev; if (F.rev) F.thr = 0; }); tb('tAP', () => { if (F.ap) F.apOff('pilot'); else { F.ap = true; F.gammaHold = null; } }); tb('tAT', () => { F.at = !F.at; });
 $('tBrake').addEventListener('pointerdown', () => (touch.brake = true)); for (const ev of ['pointerup', 'pointerleave', 'pointercancel']) $('tBrake').addEventListener(ev, () => (touch.brake = false));
-$('camBtn').onclick = () => cycleCam(); $('pauseBtn').onclick = () => pause(true);
+$('camBtn').onclick = () => cycleCam(); $('warpBtn').onclick = () => setWarp(save.warp === 1 ? 'auto' : 1); $('coachBtn').onclick = () => setCoach(save.coach === false); $('pauseBtn').onclick = () => pause(true);
 // tilting the tablet like a yoke
 const tilt = { b: 0, g: 0, on: false, base: null };
 addEventListener('deviceorientation', (e) => { if (!save.tilt || e.beta == null) return; tilt.on = true; const land = Math.abs(window.orientation || screen.orientation?.angle || 0) === 90; const p = land ? e.gamma : e.beta, r = land ? e.beta * Math.sign(window.orientation || screen.orientation?.angle || 1) : e.gamma; if (!tilt.base) tilt.base = p; tilt.b = clamp((p - tilt.base) / 25, -1, 1); tilt.g = clamp(r / 30, -1, 1); });
@@ -200,7 +285,7 @@ function placeCamera(dt, pos, quat, onGround) {
 // ---------------------------------------------------------------- the replay: from the ground, as the spotters see it
 let rp = null;
 function replay() {
-  if (!rec.length) return; $('report').hidden = true; mode = 'replay'; rp = { i: 0, t: 0 }; $('flyui').hidden = true; document.body.classList.add('flying');
+  if (!rec.length) return; $('report').hidden = true; mode = 'replay'; rp = { i: 0, t: 0 }; $('flyui').hidden = true; $('coach').hidden = true; document.body.classList.add('flying');
   hint({ zh: '回放中……點一下畫面結束', en: 'Replay... tap to finish' });
 }
 canvas.addEventListener('click', () => { if (mode === 'replay') endReplay(); });
@@ -208,7 +293,7 @@ function endReplay() { mode = 'report'; $('report').hidden = false; document.bod
 
 // ---------------------------------------------------------------- the report
 function report() {
-  mode = 'report'; const G = grade(F); $('flyui').hidden = true; document.body.classList.remove('flying');
+  mode = 'report'; const G = grade(F); $('flyui').hidden = true; $('coach').hidden = true; document.body.classList.remove('flying');
   const best = save.best[cfg.id]; if (!F.crashed && (!best || G.score > best.score)) { save.best[cfg.id] = { score: G.score, stars: G.stars }; store(); }
   $('rTitle').textContent = T(G.title); $('rStars').textContent = G.crash ? '💥' : '★'.repeat(G.stars) + '☆'.repeat(3 - G.stars); $('rScore').textContent = G.crash ? T({ zh: { gearup: '起落架沒放下！', hard: '落地太重，飛機受損', wing: '機翼擦到地面', pod: '發動機擦到地面', terrain: '撞到地面了' }[G.crash] || '墜機', en: { gearup: 'The gear was up!', hard: 'Too hard: the aircraft is damaged', wing: 'A wingtip hit the ground', pod: 'An engine hit the ground', terrain: 'You hit the ground' }[G.crash] || 'Crashed' }) : `${G.score} / 100`;
   $('rFlight').textContent = `${F.flightNo} · ${TYPES[save.type].name} · ${T(AIRLINES[save.al].name)} · RWY ${cfg.rwy}`;
@@ -224,7 +309,7 @@ function frame(now) {
   const dt = Math.min(1 / 20, (now - last) / 1000); last = now; simT += dt;
   if (mode === 'fly') {
     const I = readInput(dt);
-    const sub = 4; for (let i = 0; i < sub; i++) F.step(dt / sub, I);
+    warpCur += clamp(warpWant() - warpCur, -dt * 2, dt * 1.2); const sub = Math.ceil(4 * warpCur); for (let i = 0; i < sub; i++) F.step(dt * warpCur / sub, I);
     for (const e of F.events.splice(0)) {
       if (e.k === 'touch') { sfx('touch', clamp(e.sink / 2.5, 0.25, 1.2)); if (!said.welcome) { said.welcome = true; setTimeout(() => say(`${F.callsign}, welcome to Taoyuan. Vacate at the next taxiway, contact ground one two one decimal eight.`, { zh: `${F.callsign}，歡迎來到桃園。從下一個滑行道脫離跑道，聯絡地面管制 121.8。`, en: `${F.callsign}, welcome to Taoyuan. Vacate at the next taxiway, contact ground 121.8.` }), 4000); } }
       if (e.k === 'apoff') { sfx('apoff'); hint({ zh: e.why === 'minimums' ? '自動駕駛解除！現在交給你：收油門、拉平、落地。' : '自動駕駛解除。', en: e.why === 'minimums' ? 'Autopilot off! Your aircraft: thrust idle, flare, touch down.' : 'Autopilot disconnected.' }); }
@@ -233,7 +318,7 @@ function frame(now) {
       if (e.k === 'tailstrike') hint({ zh: '機尾擦地！', en: 'Tail strike!' });
       if (e.k === 'off') hint({ zh: '衝出跑道了！', en: 'Off the runway!' });
     }
-    voices(dt);
+    voices(dt); coach(dt);
     // reminders to configure for landing, on the longer approaches
     if (!F.onGround && !F.ap) { const d = F.distNm;
       if (d < 7.5 && F.flapIdx < 2 && !said.cf2) { said.cf2 = true; hint({ zh: '快到了：放下襟翼（V），讓速度慢下來。', en: 'Getting close: extend the flaps (V) and slow down.' }); }
