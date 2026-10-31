@@ -56,3 +56,12 @@ body.touch.flying #tright { display: flex; position: fixed; right: 14px; bottom:
 @media (min-width: 761px) and (max-width: 1240px) and (min-height: 521px) { #sub { left: 354px; transform: none; max-width: calc(100vw - 354px - 330px); text-align: left; } }
 @media (max-width: 760px), (max-height: 520px) { #coach { top: 58px; width: min(270px, calc(100vw - 24px)); font-size: 11px; padding: 6px 9px; } #cNow { font-size: 14px; } #cSteps { display: none; } #sub { left: 12px; top: 10px; transform: none; max-width: calc(100vw - 340px); font-size: 12px; padding: 5px 10px; text-align: left; } #coach { top: 66px; } }
 @media (max-width: 520px) { #sub { top: 62px; max-width: calc(100vw - 24px); } #coach { top: 122px; } }
+#cFlap { display: flex; align-items: center; flex-wrap: wrap; gap: 3px; margin: 0 0 6px; font-size: 12px; }
+#cFlap span { color: #9cc0ea; margin-right: 4px; }
+#cFlap b { padding: 1px 6px; border-radius: 6px; background: rgba(255, 255, 255, .08); color: #8a9ab4; font-weight: 700; }
+#cFlap b.past { color: #5ae08a; }
+#cFlap b.on { background: #2f7ae0; color: #fff; }
+#cFlap b.fast { color: #ff7a5a; }
+#cFlap i { color: #56657e; font-style: normal; }
+#cFlap small { margin-left: 6px; color: #8a9ab4; }
+@media (max-width: 760px), (max-height: 520px) { #cFlap { font-size: 10px; margin: 0; } #cFlap small { display: none; } }

@@ -6,7 +6,7 @@
 <title>桃園機場降落 Taoyuan Landing</title>
 <meta name="description" content="Fly China Airlines, EVA Air and STARLUX jets down to Taiwan Taoyuan International Airport.">
 <link rel="icon" href="data:,">
-<link rel="stylesheet" href="style.css?v=2">
+<link rel="stylesheet" href="style.css?v=3">
 </head>
 <body>
 <canvas id="view"></canvas>
@@ -27,7 +27,7 @@
 
 <div id="flyui" hidden>
   <div class="tr"><button id="coachBtn">📋</button><button id="warpBtn">⏩</button><button id="camBtn">🎥</button><button id="pauseBtn">⏸</button></div>
-  <div id="coach" hidden><div id="cPhase"></div><div id="cNow"></div><ol id="cSteps"></ol></div>
+  <div id="coach" hidden><div id="cPhase"></div><div id="cNow"></div><div id="cFlap"></div><ol id="cSteps"></ol></div>
   <div id="yoke"><div id="yokeKnob">✈</div></div>
   <div id="tright">
     <input id="thrSlider" type="range" min="0" max="100" value="40" orient="vertical">
@@ -49,6 +49,6 @@
   </div>
 </div>
 
-<script type="module" src="js/main.js?v=2"></script>
+<script type="module" src="js/main.js?v=3"></script>
 </body>
 </html>
