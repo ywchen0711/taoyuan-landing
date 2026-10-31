@@ -6,7 +6,7 @@
 <title>桃園機場降落 Taoyuan Landing</title>
 <meta name="description" content="Fly China Airlines, EVA Air and STARLUX jets down to Taiwan Taoyuan International Airport.">
 <link rel="icon" href="data:,">
-<link rel="stylesheet" href="style.css?v=3">
+<link rel="stylesheet" href="style.css?v=4">
 </head>
 <body>
 <canvas id="view"></canvas>
@@ -28,9 +28,11 @@
 <div id="flyui" hidden>
   <div class="tr"><button id="coachBtn">📋</button><button id="warpBtn">⏩</button><button id="camBtn">🎥</button><button id="pauseBtn">⏸</button></div>
   <div id="coach" hidden><div id="cPhase"></div><div id="cNow"></div><div id="cFlap"></div><ol id="cSteps"></ol></div>
-  <div id="yoke"><div id="yokeKnob">✈</div></div>
+  <div id="keys" hidden></div>
+  <div id="toast" hidden></div>
+  <div id="yoke"><div id="yokeKnob">✈</div><div id="yokeTip"></div></div>
   <div id="tright">
-    <input id="thrSlider" type="range" min="0" max="100" value="40" orient="vertical">
+    <div id="thrBox"><span id="thrTip"></span><input id="thrSlider" type="range" min="0" max="100" value="40" orient="vertical"></div>
     <div class="tbtns"><button id="tGear">GEAR</button><button id="tFlapDn">FLAP+</button><button id="tFlapUp">FLAP−</button><button id="tBrake">BRAKE</button><button id="tRev">REV</button><button id="tAP">AP</button><button id="tAT">A/T</button></div>
   </div>
 </div>
@@ -49,6 +51,6 @@
   </div>
 </div>
 
-<script type="module" src="js/main.js?v=3"></script>
+<script type="module" src="js/main.js?v=4"></script>
 </body>
 </html>
